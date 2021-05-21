@@ -25,7 +25,6 @@ for a in digitos:
 
 for i in range(3):
     cantidad="usuario"+str(i)
-
     nombre = input("ingrese su primer nombre: ")
     apellido = input("ingrese sus apellido: ")
     print("datos ingresados: ", "dominio: ", dominio, "nombre: ", nombre, "apellido: ", apellido)
