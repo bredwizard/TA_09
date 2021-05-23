@@ -51,7 +51,7 @@ score = 0
 vidas = 3
 
 # PLATAFORMAS --> hitbox plataforma(posicion x, posicion y, longitud x, longitud y)
-platform = pygame.image.load("assets/plataforma.png")
+platform = pygame.image.load("Project_Team/assets/plataforma.png")
 platforms = [
     # plataforma media(izquierda a derecha)
     pygame.Rect(100, 300, 64, 64),
@@ -68,9 +68,9 @@ platforms = [
 
 # LISTA DE IMAGENES
 # moneda
-coin = pygame.image.load("assets/objetos/moneda_0.png")
+coin = pygame.image.load("Project_Team/assets/objetos/moneda_0.png")
 # imagen vidas
-vida_image = pygame.image.load("assets/vida.png")
+vida_image = pygame.image.load("Project_Team/assets/vida.png")
 
 # ---------
 # ENTIDADES

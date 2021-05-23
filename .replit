@@ -1,0 +1,2 @@
+language = "bash"
+run = "python Project_Team/pruebas.py"
