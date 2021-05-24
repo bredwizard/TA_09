@@ -37,7 +37,7 @@ player_speed = 0
 player_aceleracion = 0.2
 
 # PLATAFORMAS --> hitbox plataforma(posicion x, posicion y, longitud x, longitud y)
-platform = pygame.image.load("assets/plataforma.png")
+platform = pygame.image.load("Project_Team/assets/plataforma.png")
 
 # ---------
 # ENTIDADES

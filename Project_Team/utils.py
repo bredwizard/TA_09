@@ -35,16 +35,16 @@ def drawText(screen, t, x, y, fg, alpha):
 
     blit_alpha(screen, text, (x,y), alpha)
 
-vida_image = pygame.image.load("assets/vida.png")
+vida_image = pygame.image.load("Project_Team/assets/vida.png")
 
 #lista de imagenes de monedas (cada una es una imagen de la animacion)
-coin1 = pygame.image.load("assets/objetos/moneda_0.png")
-coin2 = pygame.image.load("assets/objetos/moneda_1.png")
-coin3 = pygame.image.load("assets/objetos/moneda_2.png")
-coin4 = pygame.image.load("assets/objetos/moneda_3.png")
-coin5 = pygame.image.load("assets/objetos/moneda_4.png")
-coin6 = pygame.image.load("assets/objetos/moneda_5.png")
-coin7 = pygame.image.load("assets/objetos/moneda_6.png")
+coin1 = pygame.image.load("Project_Team/assets/objetos/moneda_0.png")
+coin2 = pygame.image.load("Project_Team/assets/objetos/moneda_1.png")
+coin3 = pygame.image.load("Project_Team/assets/objetos/moneda_2.png")
+coin4 = pygame.image.load("Project_Team/assets/objetos/moneda_3.png")
+coin5 = pygame.image.load("Project_Team/assets/objetos/moneda_4.png")
+coin6 = pygame.image.load("Project_Team/assets/objetos/moneda_5.png")
+coin7 = pygame.image.load("Project_Team/assets/objetos/moneda_6.png")
 
 
 # definir crear moneda
@@ -60,8 +60,8 @@ def makeCoin(x, y):
     entity.type = "coleccionable"
     return entity
 
-enemy0 = pygame.image.load("assets/esbirros/esbirros_1.png")
-enemy1 = pygame.image.load("assets/esbirros/esbirros_2.png")
+enemy0 = pygame.image.load("Project_Team/assets/esbirros/esbirros_1.png")
+enemy1 = pygame.image.load("Project_Team/assets/esbirros/esbirros_2.png")
 
 def makeEnemy(x, y):
     entity = engine.Entity()
@@ -71,10 +71,10 @@ def makeEnemy(x, y):
     entity.type = "dangerous"
     return entity
 
-idle0 = pygame.image.load("assets/alejo/alejo_1.png")
+idle0 = pygame.image.load("Project_Team/assets/alejo/alejo_1.png")
 
-walking0 = pygame.image.load("assets/alejo/alejo_2.png")
-walking1 = pygame.image.load("assets/alejo/alejo_3.png")
+walking0 = pygame.image.load("Project_Team/assets/alejo/alejo_2.png")
+walking1 = pygame.image.load("Project_Team/assets/alejo/alejo_3.png")
 
 def makePlayer(x, y):
     entity = engine.Entity()

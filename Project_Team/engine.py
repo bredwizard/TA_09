@@ -6,7 +6,7 @@ import globals
 GRIS = (50, 50, 50)
 
 #imagen de plataformas
-platform = pygame.image.load("assets/plataforma.png")
+platform = pygame.image.load("Project_Team/assets/plataforma.png")
 
 # crear clase SISTREM
 class System():
