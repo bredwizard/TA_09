@@ -1,8 +1,12 @@
 import pygame
-BLANCO = (255, 255, 255)
+import utils
+import globals
+
+
+GRIS = (50, 50, 50)
 
 #imagen de plataformas
-platform = pygame.image.load("Project_Team/assets/plataforma.png")
+platform = pygame.image.load("assets/plataforma.png")
 
 # crear clase SISTREM
 class System():
@@ -14,14 +18,14 @@ class System():
         # reportar verdadesd
         return True
     # definir acualizacion de pantalla, entidades y plataformas
-    def update(self, screen,entities, platforms):
+    def update(self, screen):
         # para entidad en entidades
-        for entity in entities:
+        for entity in globals.world.entities:
             # si se verifica la entidad
             if self.check(entity):
                 # acualizar de pantalla , entidad, entidades y plataformas
-                self.updateEntity(screen, entity, entities, platforms)
-    def updateEntity(self,screen, entity, entities, platforms):
+                self.updateEntity(screen, entity)
+    def updateEntity(self,screen, entity):
         pass
 
 # crear clase de sistema de camaras
@@ -30,7 +34,7 @@ class CameraSystem(System):
         super().__init__()
     def check(self, entity):
         return entity.camera is not None
-    def updateEntity(self,screen, entity,entities, platforms):
+    def updateEntity(self,screen, entity):
 
         # hacer rectangulo de camara
         cameraRect = entity.camera.rect
@@ -58,18 +62,32 @@ class CameraSystem(System):
         offsetY = cameraRect.y + cameraRect.h/2 - entity.camera.worldY
 
         #color fondo de pantalla camara
-        screen.fill(BLANCO)
+        screen.fill(GRIS)
 
         # renderizar plataformas
-        for p in platforms:
+        for p in globals.world.platforms:
             newPosRect = pygame.Rect(p.x + offsetX, p.y + offsetY, p.w, p.h)
             screen.blit(platform, (newPosRect))
 
         #renderizar entidades
-        for e in entities:
+        for e in globals.world.entities:
             s = e.state
             a = e.animations.animationList[s]
             a.draw(screen, e.position.rect.x + offsetX, e.position.rect.y + offsetY, e.direction == "right", False)
+
+            #HUD del jugador
+
+            # PUNTAJE
+            if entity.score is not None:
+                screen.blit(utils.coin1, (entity.camera.rect.x + 10, entity.camera.rect.y + 10))
+                utils.drawText(screen, str(entity.score.score), entity.camera.rect.x + 65, entity.camera.rect.y + 35, globals.BLANCO,255)
+
+            # VIDAS
+            if entity.battle is not None:
+                for l in range(entity.battle.lives):
+                    # poner vidas en pantalla en X + repeticion cuantas vidas hayan, y
+                    screen.blit(utils.vida_image, (entity.camera.rect.x + 10 + (l * 20), entity.camera.rect.y + 65))
+
 
         # deshacer rectangulo de camara
         screen.set_clip(None)
@@ -136,6 +154,19 @@ class Animation():
 # --------
 #ENTIDADES
 # --------
+
+class Score():
+    # construir clase posicion
+    def __init__(self):
+        # rectangulo (pos x, pos y, ancho, alto),
+        self.score = 0
+
+class Battle():
+    # construir clase posicion
+    def __init__(self):
+        # rectangulo (pos x, pos y, ancho, alto),
+        self.lives = 3
+
 #construir clase entidades
 class Entity():
     def __init__(self):
@@ -151,3 +182,5 @@ class Entity():
         self.direction = "right"
         # camara = ninguna
         self.camera = None
+        self.score = None
+        self.battle = None
