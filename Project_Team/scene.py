@@ -93,7 +93,7 @@ class WinScene(Scene):
         bgSurf.fill((globals.NEGRO))
         utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
 
-        utils.drawText(screen, "GANASTE UN AUTO NISSAN", 250, 250,globals.BLANCO, self.alpha)
+        utils.drawText(screen, "GANASTE, dale a la x", 250, 250,globals.BLANCO, self.alpha)
 
 class LoseScene(Scene):
     def __init__(self):
@@ -113,7 +113,7 @@ class LoseScene(Scene):
         bgSurf.fill((globals.NEGRO))
         utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
 
-        utils.drawText(screen, "KEIN BECIL, dele a la x, aguevado", 250, 250,globals.BLANCO, self.alpha)
+        utils.drawText(screen, "PERDISTE, dale a la x", 250, 250,globals.BLANCO, self.alpha)
 
 class TransitionScene(Scene):
     def __init__(self, fromScenes, toScenes):
