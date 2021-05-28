@@ -1,14 +1,11 @@
-import pygame
+# importar librarias
 import utils
 import globals
-
-
-GRIS = (50, 50, 50)
-
+import pygame
 #imagen de plataformas
-platform = pygame.image.load("Project_Team/assets/plataforma.png")
+platform = pygame.image.load("assets/plataforma.png")
 
-# crear clase SISTREM
+# crear clase SISTEMA
 class System():
     # empezar a definir
     def __init__(self):
@@ -18,23 +15,200 @@ class System():
         # reportar verdadesd
         return True
     # definir acualizacion de pantalla, entidades y plataformas
-    def update(self, screen):
+    def update(self, screen = None, inputStream = None):
         # para entidad en entidades
         for entity in globals.world.entities:
             # si se verifica la entidad
             if self.check(entity):
                 # acualizar de pantalla , entidad, entidades y plataformas
-                self.updateEntity(screen, entity)
-    def updateEntity(self,screen, entity):
+                self.updateEntity(screen, inputStream, entity)
+    # actualizar entidad(en pantalla, inputs, entidad)
+    def updateEntity(self,screen, inputStream, entity):
         pass
+
+# clase sistema de animaciones
+class AnimationSystem(System):
+    # verificar entidad
+    def check(self, entity):
+        # reportar verdad
+        return entity.animations is not None
+    # ctualizar entidad
+    def updateEntity(self,screen, inputStream, entity):
+        # desde la lista de animaciones para cada entidad
+        entity.animations.animationList[entity.state].update()
+
+# sistema de fisicas
+class PhysicsSystem(System):
+    # verificar sistema paraa las entidades
+    def check(self, entity):
+        # reportar verdad
+        return entity.position is not None
+    # actualizar entidades en pantalla, inputa y entidades
+    def updateEntity(self,screen, inputStream, entity):
+        # new_x = posicion de la entidad en el hitbox x
+        new_x = entity.position.rect.x
+        # new_y = posicion de la entidad en el hitbox y
+        new_y = entity.position.rect.y
+
+
+        if entity.intention is not None:
+            # movimiento del jugador
+            # ir a la izquierda = tecla A
+            if entity.intention.moveLeft:
+                # velocidad traslacion izquierda
+                new_x -= 3
+                # direccion del sprite izquierda
+                entity.direction = "left"
+                # estado del jugador = caminando
+                entity.state = "walking"
+
+            # ir a la derecha = tecla D
+            if entity.intention.moveRight:
+                # velocidad traslacion derecha
+                new_x += 3
+                # direccion del sprite derecha
+                entity.direction = "right"
+                # estado del jugador = caminando
+                entity.state = "walking"
+            if not entity.intention.moveLeft and not entity.intention.moveRight:
+                entity.state = "idle"
+
+            # salto  = W (si esta en el suelo)
+            if entity.intention.jump and entity.on_ground:
+                # velocidad salto
+                entity.speed = -7
+
+        # movimiento horizontal y colision (pocicion en x, posicion en y, longitud colision en x, longitud colision en y)
+        new_x_rect = pygame.Rect(
+            int(new_x),
+            int(entity.position.rect.y),
+            entity.position.rect.width,
+            entity.position.rect.height)
+
+        # variable colisiones en x
+        x_colision = False
+
+        # verificar colision horizontal en la lista de plataformas
+        for platform in globals.world.platforms:
+            # "si colisiona con la hitbox del jugador en x..."
+            if platform.colliderect(new_x_rect):
+                x_colision = True
+                break
+
+        # fin de la colision o no colision en x
+        if x_colision == False:
+            entity.position.rect.x = new_x
+
+        # movimiento vertical
+        # "la velocidad aumenta a la tasa de la aceleracion en y"
+        entity.speed += entity.aceleracion
+        # la posicion aumenta a la tasa de la velocidad en y"
+        new_y += entity.speed
+
+        # movimiento vertical y colision (pocicion en x, posicion en y, longitud colision en x, longitud colision en y)
+        new_y_rect = pygame.Rect(
+            int(entity.position.rect.x),
+            int(new_y),
+            entity.position.rect.width,
+            entity.position.rect.height)
+        # variable colision en y
+        y_colision = False
+        # jugador en el suelo = falso
+        entity.on_ground = False
+
+        # verificar colision vertical en la lista de plataformas
+        for platform in globals.world.platforms:
+            # "si colisiona con la hitbox del jugador en x..."
+            if platform.colliderect(new_y_rect):
+                y_colision = True
+                entity.speed = 0
+                # "si la plataforma esta debajo del jugador"
+                if platform[1] > new_y:
+                    # mantener el jugador en la plataforma
+                    entity.position.rect.y = platform[1] - entity.position.rect.height
+                    # jugador en el suelo = verdadero
+                    entity.on_ground = True
+                break
+
+        # fin de la colision o no colision en y
+        if y_colision == False:
+            # la hitbox del personaje es igual a la nueva posicion en y
+            entity.position.rect.y = int(new_y)
+
+        #resetear intenciones
+        # si las intenciones no es ninguna
+        if entity.intention is not None:
+            # los movimientos en cualquier direccion ( arriba, derecha, izquierda) son falsos
+            entity.intention.moveLeft = False
+            entity.intention.moveRight = False
+            entity.intention.jump = False
+
+class InputSystem(System):
+    def check(self, entity):
+        return entity.input is not None and entity.intention is not None
+    def updateEntity(self, screen, inputStream, entity):
+        # up = saltar
+        if inputStream.keyboard.isKeyDown(entity.input.up):
+            entity.intention.jump = True
+        else:
+            entity.intention.jump = False
+        # left = caminar izquierda
+        if inputStream.keyboard.isKeyDown(entity.input.left):
+            entity.intention.moveLeft = True
+        else:
+            entity.intention.moveLeft = False
+        # derecha = mover derecha
+        if inputStream.keyboard.isKeyDown(entity.input.right):
+            entity.intention.moveRight = True
+        else:
+            entity.intention.moveRight = False
+
+class CollectionSystem(System):
+    # verificar entidad
+    def check(self, entity):
+        # reportar verdadesd
+        return entity.type == "player" and entity.score is not None
+    # actualizar entidad en pantalla, con los inputs y las entidades
+    def updateEntity(self,screen, inputStream, entity):
+        # para otras entidades en la lista de entidades en el mundo
+        for otherEntity in globals.world.entities:
+            # si otras entidades no son entidades son del tipo coleccionable
+            if otherEntity is not entity and otherEntity.type == "coleccionable":
+                # si se colisiona con la otra entidad
+                if entity.position.rect.colliderect(otherEntity.position.rect):
+                    # entity.collectable.onCollide(entity, otherEntity)
+                    # si hay colision
+                    globals.world.entities.remove(otherEntity)
+                     # sumar 1 al puntaje
+                    entity.score.score += 1
+
+# sitema de batalla
+class BattleSystem(System):
+    # verificar entidad
+    def check(self, entity):
+        # reportar verdadesd
+        return entity.type == "player" and entity.battle is not None
+    # actualizacion de entidad en pantalla, con los inputs y las entidades
+    def updateEntity(self,screen, inputStream, entity):
+        # para otras entidades en la lista de entidades
+        for otherEntity in globals.world.entities:
+            # si otras entidades no es la entidad y es del tipo peligroso
+            if otherEntity is not entity and otherEntity.type == "dangerous":
+                # si colisionamos
+                if entity.position.rect.colliderect(otherEntity.position.rect):
+                    # restablecer posiciones en x y y, velocidad
+                    entity.position.rect.x = 300
+                    entity.position.rect.y = 190
+                    entity.speed = 0
+                    # "...restar una vida"
+                    entity.battle.lives -= 1
+
 
 # crear clase de sistema de camaras
 class CameraSystem(System):
-    def __init__(self):
-        super().__init__()
     def check(self, entity):
         return entity.camera is not None
-    def updateEntity(self,screen, entity):
+    def updateEntity(self, screen, inputStream, entity):
 
         # hacer rectangulo de camara
         cameraRect = entity.camera.rect
@@ -62,7 +236,7 @@ class CameraSystem(System):
         offsetY = cameraRect.y + cameraRect.h/2 - entity.camera.worldY
 
         #color fondo de pantalla camara
-        screen.fill(GRIS)
+        screen.fill(globals.GRIS)
 
         # renderizar plataformas
         for p in globals.world.platforms:
@@ -92,7 +266,7 @@ class CameraSystem(System):
         # deshacer rectangulo de camara
         screen.set_clip(None)
 
-class Camera():
+class Camera:
     def __init__(self, x, y, w, h):
         self.rect = pygame.Rect(x, y, w, h)
         self.worldX = 0
@@ -123,7 +297,7 @@ class Animations():
 # -----------
 
 # construir clase ANIMACION
-class Animation():
+class Animation:
     def __init__(self, imageList):
         # definir la lista de imagenes
         self.imageList = imageList
@@ -161,14 +335,33 @@ class Score():
         # rectangulo (pos x, pos y, ancho, alto),
         self.score = 0
 
-class Battle():
-    # construir clase posicion
+class Battle:
+    # construir clase batalla
     def __init__(self):
         # rectangulo (pos x, pos y, ancho, alto),
         self.lives = 3
 
-#construir clase entidades
-class Entity():
+class Input:
+    def __init__(self, up, down, left, right):
+        self.up = up
+        self.down = down
+        self.left = left
+        self.right = right
+
+
+class Intention:
+    def __init__(self):
+        self.moveLeft = False
+        self.moveRight = False
+        self.jump = False
+
+
+def resetEntity(entity):
+    pass
+
+
+#construir clase entidades, los self.algo son las propiedades de este
+class Entity:
     def __init__(self):
         #estado "quieto"
         self.state = "idle"
@@ -182,5 +375,19 @@ class Entity():
         self.direction = "right"
         # camara = ninguna
         self.camera = None
+        # propiedad puntuacion
         self.score = None
+        # propiedad batalla
         self.battle = None
+        # propiedad velocidad
+        self.speed = 0
+        # propiedad input
+        self.input = None
+        # propiedad intencion por defecto ninguna
+        self.intention = None
+        # propiedad en el suelo por defecto falsa
+        self.on_ground = False
+        # aceleracion del jugador inicial = 0
+        self.aceleracion = 0
+        # propiedad resetear entidad
+        self.reset = resetEntity
