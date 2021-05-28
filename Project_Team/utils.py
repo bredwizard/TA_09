@@ -44,16 +44,16 @@ def drawText(screen, t, x, y, fg, alpha):
     blit_alpha(screen, text, (x,y), alpha)
 
 # imagen de corazon
-vida_image = pygame.image.load("assets/vida.png")
+vida_image = pygame.image.load("Project_Team/assets/vida.png")
 
 #lista de imagenes de monedas (cada una es una imagen de la animacion)
-coin1 = pygame.image.load("assets/objetos/moneda_0.png")
-coin2 = pygame.image.load("assets/objetos/moneda_1.png")
-coin3 = pygame.image.load("assets/objetos/moneda_2.png")
-coin4 = pygame.image.load("assets/objetos/moneda_3.png")
-coin5 = pygame.image.load("assets/objetos/moneda_4.png")
-coin6 = pygame.image.load("assets/objetos/moneda_5.png")
-coin7 = pygame.image.load("assets/objetos/moneda_6.png")
+coin1 = pygame.image.load("Project_Team/assets/objetos/moneda_0.png")
+coin2 = pygame.image.load("Project_Team/assets/objetos/moneda_1.png")
+coin3 = pygame.image.load("Project_Team/assets/objetos/moneda_2.png")
+coin4 = pygame.image.load("Project_Team/assets/objetos/moneda_3.png")
+coin5 = pygame.image.load("Project_Team/assets/objetos/moneda_4.png")
+coin6 = pygame.image.load("Project_Team/assets/objetos/moneda_5.png")
+coin7 = pygame.image.load("Project_Team/assets/objetos/moneda_6.png")
 
 
 # definir crear moneda
@@ -72,8 +72,8 @@ def makeCoin(x, y):
     return entity
 
 # imagen de los enemigos
-enemy0 = pygame.image.load("assets/esbirros/esbirros_1.png")
-enemy1 = pygame.image.load("assets/esbirros/esbirros_2.png")
+enemy0 = pygame.image.load("Project_Team/assets/esbirros/esbirros_1.png")
+enemy1 = pygame.image.load("Project_Team/assets/esbirros/esbirros_2.png")
 
 # crear enemigos
 def makeEnemy(x, y):
@@ -90,7 +90,7 @@ def makeEnemy(x, y):
     # terminar de darle propiedades
     return entity
 
-mariana0 = pygame.image.load("assets/mariana/mariana_1.png")
+mariana0 = pygame.image.load("Project_Team/assets/mariana/mariana_1.png")
 
 def makeEnemy_2(x, y):
     # decir que es una entidad
@@ -106,8 +106,8 @@ def makeEnemy_2(x, y):
     # terminar de darle propiedades
     return entity
 
-nea0 = pygame.image.load("assets/nea/nea_1.png")
-nea1 = pygame.image.load("assets/nea/nea_2 (1).png")
+nea0 = pygame.image.load("Project_Team/assets/nea/nea_1.png")
+nea1 = pygame.image.load("Project_Team/assets/nea/nea_2 (1).png")
 
 def makeEnemy_3(x, y):
     # decir que es una entidad
@@ -123,7 +123,7 @@ def makeEnemy_3(x, y):
     # terminar de darle propiedades
     return entity
 
-pipe = pygame.image.load("assets/personajes/pipe_11.png")
+pipe = pygame.image.load("Project_Team/assets/personajes/pipe_11.png")
 
 def makeEnemy_pipe(x, y):
     # decir que es una entidad
@@ -137,7 +137,7 @@ def makeEnemy_pipe(x, y):
     # terminar de darle propiedades
     return entity
 
-motor = pygame.image.load("assets/personajes/dios hecho gato.png")
+motor = pygame.image.load("Project_Team/assets/personajes/dios hecho gato.png")
 
 def makeEnemy_motor(x, y):
     # decir que es una entidad
@@ -154,10 +154,10 @@ def makeEnemy_motor(x, y):
     return entity
 
 # imagen personajes estatico
-idle0 = pygame.image.load("assets/alejo/alejo_1.png")
+idle0 = pygame.image.load("Project_Team/assets/alejo/alejo_1.png")
 #imagenes personaje caminando
-walking0 = pygame.image.load("assets/alejo/alejo_2.png")
-walking1 = pygame.image.load("assets/alejo/alejo_3.png")
+walking0 = pygame.image.load("Project_Team/assets/alejo/alejo_2.png")
+walking1 = pygame.image.load("Project_Team/assets/alejo/alejo_3.png")
 
 # definir resetear jugador al acabar un nivel
 def resetPlayer(entity):

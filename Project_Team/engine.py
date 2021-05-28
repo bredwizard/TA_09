@@ -3,7 +3,7 @@ import utils
 import globals
 import pygame
 #imagen de plataformas
-platform = pygame.image.load("assets/plataforma.png")
+platform = pygame.image.load("Project_Team/assets/plataforma.png")
 
 # crear clase SISTEMA
 class System():

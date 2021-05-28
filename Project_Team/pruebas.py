@@ -30,7 +30,7 @@ clock = pygame.time.Clock()
 
 
 # PLATAFORMAS --> hitbox plataforma(posicion x, posicion y, longitud x, longitud y)
-platform = pygame.image.load("assets/plataforma.png")
+platform = pygame.image.load("Project_Team/assets/plataforma.png")
 
 #traer escena desde scene
 sceneManager = scene.SceneManager()
