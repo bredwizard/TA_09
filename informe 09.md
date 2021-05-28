@@ -1,4 +1,5 @@
 JUEGO VIRTUALMENTE TERMINADO
+EL REGISTRO SE HACE INICIANDO EL ARCHIVO LOGIN.PY
 
 sistema de creacion de personajes facilitado,
 sitema de fisicas,
