@@ -25,7 +25,7 @@ ventana['bg'] = color
 Label(ventana, bg=color, text="Login", font=("Arial Black", 16)).pack()
 
 # Abrir imagen para ventana principal llamada "logo"
-imagen = Image.open("assets/logeo/logo_pt.png")
+imagen = Image.open("Project_Team/assets/logeo/logo_pt.png")
 # Redimensionnar la imagen a 180*180
 imagen = imagen.resize((180, 180), Image.ANTIALIAS)
 # cambiar nombre a la  imagen redimensionada (photoImg)
@@ -33,7 +33,7 @@ photoImg = ImageTk.PhotoImage(imagen)
 # Mostrar la imagen en la ventana(label sirve para colocar imagen o texto)
 panel = tk.Label(ventana, image=photoImg).pack()
 # Abrir imagen para ventana de registro
-img_reg = Image.open("assets/logeo/logo2.png")
+img_reg = Image.open("Project_Team/assets/logeo/logo2.png")
 # Redimensionar imagen a 100*220
 img_reg = img_reg.resize((100, 220), Image.ANTIALIAS)
 # poner nombre la imagen redimensionada (photo_reg)

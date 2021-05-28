@@ -2,7 +2,7 @@
 import sqlite3
 
 # crear y conectar sqlite con la base de datos
-conn=sqlite3.connect('login.db')
+conn=sqlite3.connect('Project_Team/login.db')
 # conectar con el curso
 c=conn.cursor()
 
