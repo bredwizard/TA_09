@@ -1,12 +1,12 @@
 JUEGO VIRTUALMENTE TERMINADO
 
-sistema de creacion de personajes facilitado
-sitema de fisicas
-sistema de animaciones
-escenas 
-transicion y degradado de escenas 
-reseteo de valores al iniciar un nivel
-mas personajes y enemigos
-NIVELES CREADOS
+sistema de creacion de personajes facilitado,
+sitema de fisicas,
+sistema de animaciones,
+escenas,
+transicion y degradado de escenas,
+reseteo de valores al iniciar un nivel,
+mas personajes y enemigos,
+NIVELES CREADOS,
 
-codigo de login e imagenes por jacobo del rio correa
+(codigo de login e imagenes por jacobo del rio correa)
